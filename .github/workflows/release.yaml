@@ -31,7 +31,7 @@ jobs:
         uses: helm/chart-releaser-action@v1.4.0
         with:
           charts_dir: helm
-          charts_repo_url: https://vechr.github.io/vechr-atlas/helm/charts
+          charts_repo_url: https://vechr.github.io/vechr-observability/helm/charts
           config: helm/cr.yaml
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
