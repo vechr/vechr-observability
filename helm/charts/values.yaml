@@ -1,0 +1,95 @@
+##################################################### Config for ElasticSearch #########################################################
+elasticsearch:
+  enabled: true
+  secret:
+    enabled: true
+    password: "vechr-obs" # generated randomly if not defined
+  
+  esJavaOpts: "-Xmx128m -Xms128m"
+
+  antiAffinity: "soft"
+  
+  volumeClaimTemplate:
+    accessModes: ["ReadWriteOnce"]
+    resources:
+      requests:
+        storage: 10Gi
+
+  # Allocate smaller chunks of memory per pod.
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "512M"
+    limits:
+      cpu: "1000m"
+      memory: "512M"
+
+##################################################### Config for Logstash #########################################################
+logstash:
+  enabled: true
+  logstashConfig:
+    logstash.yml: |
+      http.host: 0.0.0.0
+      xpack.monitoring.enabled: false
+
+  logstashPipeline:
+    uptime.conf: |
+      input { exec { command => "uptime" interval => 30 } }
+      output {
+        elasticsearch {
+          hosts => ["https://elasticsearch-master:9200"]
+          user => '${ELASTICSEARCH_USERNAME}'
+          cacert => '/usr/share/logstash/config/certs/ca.crt'
+          password => '${ELASTICSEARCH_PASSWORD}'
+          index => "logstash"
+        }
+      }
+
+  extraEnvs:
+    - name: "ELASTICSEARCH_USERNAME"
+      valueFrom:
+        secretKeyRef:
+          name: elasticsearch-master-credentials
+          key: username
+    - name: "ELASTICSEARCH_PASSWORD"
+      valueFrom:
+        secretKeyRef:
+          name: elasticsearch-master-credentials
+          key: password
+
+  secretMounts: 
+    - name: elasticsearch-master-certs
+      secretName: elasticsearch-master-certs
+      path: /usr/share/logstash/config/certs
+  
+  service:
+    annotations: {}
+    type: ClusterIP
+    loadBalancerIP: ""
+    ports:
+      - name: beats
+        port: 5044
+        protocol: TCP
+        targetPort: 5044
+      - name: http
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+
+##################################################### Config for Kibana #########################################################
+kibana:
+  enabled: false
+  ingress:
+    enabled: true
+    className: "nginx"
+    pathtype: ImplementationSpecific
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - host: monitor.vechr.com
+        paths:
+          - path: /
+    # tls:
+    #  - secretName: cert-observability
+    #    hosts:
+    #      - monitor.vechr.com
