@@ -75,21 +75,3 @@ logstash:
         port: 8080
         protocol: TCP
         targetPort: 8080
-
-##################################################### Config for Kibana #########################################################
-kibana:
-  enabled: false
-  ingress:
-    enabled: true
-    className: "nginx"
-    pathtype: ImplementationSpecific
-    annotations:
-      kubernetes.io/ingress.class: nginx
-    hosts:
-      - host: monitor.vechr.com
-        paths:
-          - path: /
-    # tls:
-    #  - secretName: cert-observability
-    #    hosts:
-    #      - monitor.vechr.com
