@@ -53,6 +53,34 @@ entries:
     version: 8.5.1
   vechr-observability:
   - apiVersion: v2
+    appVersion: 0.0.2
+    created: "2023-01-31T17:06:51.848519985Z"
+    dependencies:
+    - condition: elasticsearch.enabled
+      name: elasticsearch
+      repository: https://helm.elastic.co
+      version: 8.5.1
+    - condition: logstash.enabled
+      name: logstash
+      repository: https://helm.elastic.co
+      version: 8.5.1
+    description: Vechr for observability
+    digest: f8de0047a9982b28ee7e2b461298fa3179cabce4568a7e9ee5b86702d6ef537d
+    home: https://github.com/vechr
+    icon: https://raw.githubusercontent.com/vechr/vechr-atlas/master/images/logo.svg
+    keywords:
+    - Vechr
+    - IoT
+    maintainers:
+    - email: isnaen70@gmail.com
+      name: zulfikar
+      url: https://github.com/zulfikar4568
+    name: vechr-observability
+    type: application
+    urls:
+    - https://github.com/vechr/vechr-observability/releases/download/vechr-observability-0.0.2/vechr-observability-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
     appVersion: 0.0.1
     created: "2023-01-30T17:27:48.603909977Z"
     dependencies:
@@ -84,4 +112,4 @@ entries:
     urls:
     - https://github.com/vechr/vechr-observability/releases/download/vechr-observability-0.0.1/vechr-observability-0.0.1.tgz
     version: 0.0.1
-generated: "2023-01-30T17:27:48.603918277Z"
+generated: "2023-01-31T17:06:51.848533185Z"
