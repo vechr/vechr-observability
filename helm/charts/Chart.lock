@@ -1,0 +1,12 @@
+dependencies:
+- name: nginx-ingress
+  repository: https://helm.nginx.com/stable
+  version: 0.15.2
+- name: elasticsearch
+  repository: https://helm.elastic.co
+  version: 8.5.1
+- name: logstash
+  repository: https://helm.elastic.co
+  version: 8.5.1
+digest: sha256:572b1e2eb3c93886232c4d73ea193c6065768c259f4cdf0bf42fa2dbd0e5f582
+generated: "2023-04-12T12:35:32.342298+07:00"

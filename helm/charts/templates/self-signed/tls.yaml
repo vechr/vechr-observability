@@ -1,0 +1,12 @@
+{{if .Values.selfSigned.enabled }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{.Values.selfSigned.secretName}}
+type: kubernetes.io/tls
+data:
+  ca.crt: {{.Values.selfSigned.ca}}
+  tls.crt: {{.Values.selfSigned.cert}}
+  tls.key: {{.Values.selfSigned.key}}
+{{end}}

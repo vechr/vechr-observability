@@ -20,6 +20,11 @@ maintainers:
 icon: https://raw.githubusercontent.com/vechr/vechr-atlas/master/images/logo.svg
 
 dependencies:
+  - name: nginx-ingress
+    version: 0.15.2
+    repository: https://helm.nginx.com/stable
+    condition: nginx.enabled
+    
   - name: elasticsearch
     version: 8.5.1
     repository: https://helm.elastic.co
